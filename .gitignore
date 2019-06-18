@@ -6,3 +6,5 @@ bin-int/
 # user files
 *.user
 
+# clang/other c++ compiler cache files
+*.gch
