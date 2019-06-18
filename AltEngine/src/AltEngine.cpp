@@ -3,10 +3,11 @@
 
 int main() {
 	AltLogger* altLogger = new AltLogger(true);
-	altLogger->log("Hi log!");
-	altLogger->error("Get out, error!");
-	altLogger->verbose("Welcome, verbose!");
-	altLogger->warning("Be careful, warning!");
+	altLogger->log((char*)"Hi log!");
+	altLogger->error((char*)"Get out, error!");
+	altLogger->verbose((char*)"Welcome, verbose!");
+	altLogger->warning((char*)"Be careful, warning!");
 	
 	std::cin.get();
+	delete altLogger;
 }
