@@ -8,3 +8,13 @@ bin-int/
 
 # clang/other c++ compiler cache files
 *.gch
+
+# Binaries
+bin/
+
+# GMake files
+Makefile
+AltEngine.make
+
+# Other files that premake generates
+obj/
