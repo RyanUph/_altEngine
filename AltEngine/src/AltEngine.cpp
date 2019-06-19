@@ -1,26 +1,24 @@
 #include <iostream>
-#include "logger.hpp"
-#include "keydispatcher.hpp"
+#include "baseapi.hpp"
 #include "keylistener.hpp"
 #include "keys.hpp"
 
 int main() {
-	AltLogger* altLogger = new AltLogger(true);
-	
 	// Let's create a test listener
-	KeyListener* listener = new KeyListener(altLogger);
-	// Now, let's create a event dispatcher
-	KeyDispatcher* dispatcher = new KeyDispatcher();
-	// and register our listener...
-	dispatcher->add(listener);
-	// Now, let's test it!
-	dispatcher->emit(Keys::UP_ARROW);
+	KeyListener* listener = new KeyListener();
+	// Now, let's create a rendering instance (for testing)
+	BaseAPI* api = new BaseAPI(300, 300, true);
+	// Let's now register our listener
+	api->dispatcher->add(listener);
+	// Let's emit a key just to test if eveything is working
+	api->dispatcher->emit(Keys::UP_ARROW);
 	
-	altLogger->log((char*)"Hi log!");
-	altLogger->error((char*)"Get out, error!");
-	altLogger->verbose((char*)"Welcome, verbose!");
-	altLogger->warning((char*)"Be careful, warning!");
+	api->logger->log((char*)"Hi log!");
+	api->logger->error((char*)"Get out, error!");
+	api->logger->verbose((char*)"Welcome, verbose!");
+	api->logger->warning((char*)"Be careful, warning!");
 	
 	std::cin.get();
-	delete altLogger;
+	delete api;
+	delete listener;
 }

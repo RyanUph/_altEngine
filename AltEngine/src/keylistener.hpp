@@ -7,14 +7,10 @@
 
 class KeyListener : Listener {
 	public:
-	void on (Keys key) {
-		logger->verbose((char*)"A key was pressed:");
-		logger->verbose((char*)std::to_string(key).c_str());
+	void on (Keys key, AltLogger* logger) {
+		std::string text = "A key was pressed: "+ std::to_string(key);
+		logger->verbose((char*)text.c_str());
 	}
-	KeyListener(AltLogger* loggerInstance) {
-		logger = loggerInstance;
-	}
-	AltLogger* logger;
 };
 
 #endif

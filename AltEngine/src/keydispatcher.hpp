@@ -4,6 +4,7 @@
 #import "keys.hpp"
 #import "dispatcher.hpp"
 #import "keylistener.hpp"
+#import "logger.hpp"
 #import <vector>
 
 class KeyDispatcher : Dispatcher {
@@ -13,9 +14,13 @@ class KeyDispatcher : Dispatcher {
 	}
 	void emit (Keys key) {
 		for (KeyListener* listener : listeners) {
-		  listener->on(key); // Let's just broadcast the message to all registered listeners
+		  listener->on(key, logger); // Let's just broadcast the message to all registered listeners
 		}
 	}
+	KeyDispatcher (AltLogger* log) {
+		logger = log;
+	}
+	AltLogger* logger;
 	std::vector<KeyListener*> listeners;
 };
 #endif
