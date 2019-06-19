@@ -1,22 +1,21 @@
 #ifndef altinput_key_dispatcher
 #define altinput_key_dispatcher
 
-#import <memory>
-#import <vector>
 #import "keys.hpp"
-#import "listener.hpp"
+#import "dispatcher.hpp"
+#import "keylistener.hpp"
+#import <vector>
 
-class KeyDispatcher {
+class KeyDispatcher : Dispatcher {
 	public:
-	void add (Listener* listener) {
-		listeners.add(listener)
+	void add (KeyListener* listener) {
+		listeners.push_back(listener);
 	}
 	void emit (Keys key) {
-		for (Listener* listener : listeners) {
-		  listener->on(key) // Let's just broadcast the message to all registered listeners
+		for (KeyListener* listener : listeners) {
+		  listener->on(key); // Let's just broadcast the message to all registered listeners
 		}
 	}
-	private:
-	Listener*[] listeners;
+	std::vector<KeyListener*> listeners;
 };
 #endif
