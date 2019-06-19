@@ -143,7 +143,6 @@
     <ClInclude Include="src\keylistener.hpp" />
     <ClInclude Include="src\keys.hpp" />
     <ClInclude Include="src\listener.hpp" />
-    <ClInclude Include="src\localtime.hpp" />
     <ClInclude Include="src\logger.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

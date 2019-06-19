@@ -4,7 +4,8 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include "localtime.hpp"
+#include <time.h>
+#include <ctime>
 
 class AltLogger {
   public:
@@ -13,7 +14,15 @@ class AltLogger {
 		  std::time_t now = std::time(0);
 		  struct tm tstruct;
 		  char buf[80];
+
+#ifdef _WIN32
+
 		  localtime_s(&tstruct, &now);
+
+#else
+		  localtime_r(&now, &tstruct);
+
+#endif
 		  strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
 		  return buf;
 	}
