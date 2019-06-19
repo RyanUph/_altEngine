@@ -136,6 +136,15 @@
   <ItemGroup>
     <ClCompile Include="src\AltEngine.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\baseapi.hpp" />
+    <ClInclude Include="src\dispatcher.hpp" />
+    <ClInclude Include="src\keydispatcher.hpp" />
+    <ClInclude Include="src\keylistener.hpp" />
+    <ClInclude Include="src\keys.hpp" />
+    <ClInclude Include="src\listener.hpp" />
+    <ClInclude Include="src\logger.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

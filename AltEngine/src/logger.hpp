@@ -14,7 +14,7 @@ class AltLogger {
 		  std::time_t now = std::time(0);
 		  struct tm tstruct;
 		  char buf[80];
-		  localtime_r(&now, &tstruct);
+		  localtime_s(&tstruct, &now);
 		  strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
 		  return buf;
 	}

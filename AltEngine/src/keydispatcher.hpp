@@ -1,11 +1,11 @@
 #ifndef altinput_key_dispatcher
 #define altinput_key_dispatcher
 
-#import "keys.hpp"
-#import "dispatcher.hpp"
-#import "keylistener.hpp"
-#import "logger.hpp"
-#import <vector>
+#include "keys.hpp"
+#include "dispatcher.hpp"
+#include "keylistener.hpp"
+#include "logger.hpp"
+#include <vector>
 
 class KeyDispatcher : Dispatcher {
 	public:

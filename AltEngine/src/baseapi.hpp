@@ -1,9 +1,9 @@
 #ifndef altrender_base_api
 #define altrender_base_api
 
-#import <iostream>
-#import "logger.hpp"
-#import "keydispatcher.hpp"
+#include <iostream>
+#include "logger.hpp"
+#include "keydispatcher.hpp"
 
 class BaseAPI {
 	public:
