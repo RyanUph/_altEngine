@@ -5,19 +5,18 @@
 #include <string>
 #include <chrono>
 #include <ctime>
+#include <time.h>
 
 class AltLogger {
   public:
-	bool verboseEnabled;
-	const std::string getDate() {
-		std::time_t now = std::time(0);
-		struct tm tstruct;
-		char buf[80];
-		localtime_s(&tstruct, &now);
-
-		strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-
-		return buf;
+	 bool verboseEnabled;
+	 const std::string getDate() {
+		  std::time_t now = std::time(0);
+		  struct tm tstruct;
+		  char buf[80];
+		  localtime_r(&now, &tstruct);
+		  strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+		  return buf;
 	}
 
 	void log(char* message) {
