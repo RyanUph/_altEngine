@@ -4,8 +4,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include <ctime>
-#include <time.h>
+#include "localtime.hpp"
 
 class AltLogger {
   public:
@@ -18,7 +17,6 @@ class AltLogger {
 		  strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
 		  return buf;
 	}
-
 	void log(char* message) {
 		std::cout << "[LOG] [" << getDate() << "] " << message << std::endl;
 	}
