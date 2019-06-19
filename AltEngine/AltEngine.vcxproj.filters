@@ -41,5 +41,8 @@
     <ClInclude Include="src\listener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\localtime.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
