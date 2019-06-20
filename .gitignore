@@ -6,11 +6,11 @@ bin-int/
 # user files
 *.user
 
+# Visual Studio solution
+*.sln
+
 # clang/other c++ compiler cache files
 *.gch
-
-# Binaries
-bin/
 
 # GMake files
 Makefile
