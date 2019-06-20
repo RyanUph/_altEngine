@@ -2,11 +2,11 @@
 #define altinput_keys
 
 enum Keys {
-	UP_ARROW,
-	LEFT_ARROW,
-	RIGHT_ARROW,
-	DOWN_ARROW,
-	ENTER_KEY
+	UP_ARROW = 0,
+	LEFT_ARROW = 1,
+	RIGHT_ARROW = 2,
+	DOWN_ARROW = 3,
+	ENTER_KEY = 4
 };
 
 #endif

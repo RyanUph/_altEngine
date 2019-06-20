@@ -15,6 +15,6 @@ bin-int/
 # GMake files
 Makefile
 AltEngine.make
-
+AltEngine/Makefile
 # Other files that premake generates
 obj/

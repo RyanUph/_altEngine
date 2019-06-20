@@ -12,10 +12,11 @@ class KeyDispatcher : Dispatcher {
 	void add (KeyListener* listener) {
 		listeners.push_back(listener);
 	}
-	void emit (Keys key) {
+	int emit (Keys key) {
 		for (KeyListener* listener : listeners) {
 		  listener->on(key, logger); // Let's just broadcast the message to all registered listeners
 		}
+		return key;
 	}
 	KeyDispatcher (AltLogger* log) {
 		logger = log;
