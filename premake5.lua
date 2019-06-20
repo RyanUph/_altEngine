@@ -9,7 +9,7 @@ project "AltEngine"
    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-   files { "%{prj.name/src/**.h", "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
+   files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }
