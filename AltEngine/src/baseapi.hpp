@@ -10,14 +10,16 @@ class BaseAPI {
 	AltLogger* logger;
 	int width = 0;
 	int height = 0;
+	char* titlename = (char*)"AltEngine";
 	KeyDispatcher* dispatcher;
 	
-	BaseAPI (int width, int height, bool verbose) {
+	BaseAPI (int width, int height, bool verbose, char* title) {
 		if (!verbose) {
 			verbose = false;
 		}
 		logger = new AltLogger(verbose);
 		dispatcher = new KeyDispatcher(logger);
+		titlename = title;
 	}
 };
 
