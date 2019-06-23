@@ -6,20 +6,25 @@
 #include "exitcodes.hpp"
 #include <GLFW/glfw3.h>
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+}
+void error_callback (int error, const char* desc) {
+	std::string text = "Error "+ std::to_string(error) +":";
+	std::cout << (char*)text.c_str() << std::endl;
+	std::cout << (char*)desc << std::endl;
+}
+	
 class OpenGL : BaseAPI {
 	private:
-	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-			glfwSetWindowShouldClose(window, GLFW_TRUE);
-		}
-	}
-	void error_callback (int error, const char* desc) {
-		std::string text = "Error "+ std::to_string(error) +": "+ std::to_string(desc);
-		logger->error((char*)text.c_str());
-	}
 	bool windowCreated = false;
 	GLFWwindow* glfwWindow;
+	
 	public:
+	OpenGL (int width, int height, bool verbose, char* title) : BaseAPI(width, height, verbose, title) {}
+	
 	void initEngine () {
 		glfwSetErrorCallback(error_callback);
 		if (!glfwInit()) {
@@ -29,15 +34,14 @@ class OpenGL : BaseAPI {
 		
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-		
-		glfwWindow = glfwCreateWindow(width, height, std::to_string(titlename), NULL, NULL);
+		glfwWindow = glfwCreateWindow(width, height, titlename, NULL, NULL);
 		if (!glfwWindow) {
 			glfwTerminate();
 			logger->error((char*)"The engine wasn't able to create a window. Bye.");
 			exit(ExitCodes::ERROR);
 		}
 		glfwSetKeyCallback(glfwWindow, key_callback);
-		glfwMakeCurrentContext(glfwWindow);
+		glfwMakeContextCurrent(glfwWindow);
 		gladLoadGL();
 		glfwSwapInterval(1);
 		/* Creating the VAO */
@@ -57,9 +61,9 @@ class OpenGL : BaseAPI {
 		glfwTerminate();
 		exit(ExitCodes::SUCCESS);
 	}
-	void renderTriangle (float[] points) {
+	void renderTriangle (float points[]) {
 		if (!windowCreated) {
-			return logger->error("You can't use render before creating a window.");
+			return logger->error((char*)"You can't use render before creating a window.");
 		}
 		GLuint vbo;
 		glGenBuffers(1, &vbo);
@@ -71,5 +75,6 @@ class OpenGL : BaseAPI {
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0);
 	}
-}
+};
+
 #endif

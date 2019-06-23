@@ -12,11 +12,12 @@ int main() {
 	api->initEngine();
 	
 	// Now, let's render a triangle!
-	api->renderTriangle({
-        0.0f,  0.5f,  0.0f,
+	float points[] = {
+		0.0f,  0.5f,  0.0f,
         0.5f, -0.5f,  0.0f,
         -0.5f, -0.5f,  0.0f
-    });
+	};
+	api->renderTriangle(points);
     
 	std::cin.get();
 	delete api;
