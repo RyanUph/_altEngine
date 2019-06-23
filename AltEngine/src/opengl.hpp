@@ -75,6 +75,50 @@ class OpenGL : BaseAPI {
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0);
 	}
+	int compileVertexGlslShader (char* source) {
+	    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	    glShaderSource(vertexShader, 1, &source, NULL);
+	    glCompileShader(vertexShader);
+	    int success;
+	    char* log;
+	    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	    if (!success) {
+	    	glGetShaderInfoLog(vertexShader, 512, NULL, log);
+	    	logger->error((char*)"I wasn't able to compile the shaders. Error:");
+	        logger->error((char*)log);
+	        return 1;
+	    }
+	    return vertexShader;
+    }
+    int compileFragmentGlslShader (char* source) {
+	    int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+	    glShaderSource(fragShader, 1, &source, NULL);
+	    glCompileShader(fragShader);
+	    int success;
+	    char* log;
+	    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
+	    if (!success) {
+	    	glGetShaderInfoLog(fragShader, 512, NULL, log);
+	    	logger->error((char*)"I wasn't able to compile the shaders. Error:");
+	        logger->error((char*)log);
+	        return 1;
+	    }
+	    return fragShader;
+    }
+    int attachShaders (int vertex, int fragment) {
+    	int program = glCreateProgram();
+    	glAttachShader(program, vertex);
+    	glAttachShader(program, fragment);
+    	glLinkProgram(program);
+    	
+    	return program;
+    }
+    void deleteShader (int shader) {
+    	glDeleteShader(shader);
+    }
+    void useShader (int program) {
+    	glUseProgram(program);
+    }
 };
 
 #endif
