@@ -44,7 +44,9 @@ class OpenGL : BaseAPI {
 		glfwMakeContextCurrent(glfwWindow);
 		gladLoadGL();
 		glfwSwapInterval(1);
-		
+		GLuint vao;
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
 		windowCreated = true;
 	}
 	void startLoop () {
@@ -61,9 +63,6 @@ class OpenGL : BaseAPI {
 		if (!windowCreated) {
 			return logger->error((char*)"You can't use render before creating a window.");
 		}
-		GLuint vao;
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
 		
 		GLuint vbo;
 		glGenBuffers(1, &vbo);
