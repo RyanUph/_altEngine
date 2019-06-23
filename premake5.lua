@@ -10,14 +10,18 @@ project "AltEngine"
 	language "C++"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-    links {
-    	"OpenGL",
-    	"GLAD",
-    	"GLFW"
-    }
+
 	systemversion "latest"
 	
 	files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
+
+	includedirs {
+		"%{prj.name}/vendor/glad/include",
+		"%{prj.name}/vendor/glad/src",
+		"%{prj.name}/vendor/glfw/include",
+		"%{prj.name}/vendor/glfw/src",
+		"%{prj.name}/vendor/opengl3/include"
+	}
 	
 	filter "configurations:Debug"
 		defines { "DEBUG" }
@@ -26,12 +30,3 @@ project "AltEngine"
 	filter "configurations:Release"
 		defines { "NDEBUG" }
 		optimize "on"
-project "OpenGL"
-    kind "SharedLib"
-    files "AltEngine/vendor/opengl3/"
-project "GLAD"
-    kind "SharedLib"
-    files "AltEngine/vendor/glad/"
-project "GLFW"
-    kind "SharedLib"
-    files "AltEngine/vendor/glfw/"
