@@ -17,6 +17,7 @@ class OpenGL : BaseAPI {
 		std::string text = "Error "+ std::to_string(error) +": "+ std::to_string(desc);
 		logger->error((char*)text.c_str());
 	}
+	bool windowCreated = false;
 	GLFWwindow* glfwWindow;
 	public:
 	void initEngine () {
@@ -39,6 +40,12 @@ class OpenGL : BaseAPI {
 		glfwMakeCurrentContext(glfwWindow);
 		gladLoadGL();
 		glfwSwapInterval(1);
+		/* Creating the VAO */
+		GLuint vao;
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
+		
+		windowCreated = true;
 	}
 	void startLoop () {
 		while (!glfwWindowShouldClose(glfwWindow)) {
@@ -49,6 +56,20 @@ class OpenGL : BaseAPI {
 		glfwDestroyWindow(glfwWindow);
 		glfwTerminate();
 		exit(ExitCodes::SUCCESS);
+	}
+	void renderTriangle (float[] points) {
+		if (!windowCreated) {
+			return logger->error("You can't use render before creating a window.");
+		}
+		GLuint vbo;
+		glGenBuffers(1, &vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisableVertexAttribArray(0);
 	}
 }
 #endif
