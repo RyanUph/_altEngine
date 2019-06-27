@@ -67,24 +67,27 @@ class OpenGL : BaseAPI {
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0);
 	}
-	int compileVertexGlslShader (char* vertSource) {
-	    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	    glShaderSource(vertexShader, 1, &vertSource, NULL);
+	static unsigned int compileVertexGlslShader (const std::string& source) {
+	    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		const char* src = source.c_str();
+	    glShaderSource(vertexShader, 1, &src, NULL);
 	    glCompileShader(vertexShader);
 	    int success;
-	    char* log = "";
 	    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 	    if (!success) {
-	    	glGetShaderInfoLog(vertexShader, 512, NULL, log);
+			int log;
+			char* log = (char*)alloca(log * sizeof(char));
+	    	glGetShaderInfoLog(vertexShader, GL_INFO_LOG_LENGTH, &length, log);
 	    	logger->error((char*)"I wasn't able to compile the shaders. Error:");
 	        logger->error((char*)log);
 	        return 1;
 	    }
 	    return vertexShader;
     }
-    int compileFragmentGlslShader (char* source) {
+    static unsigned int compileFragmentGlslShader (const std::string& source) {
 	    int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-	    glShaderSource(fragShader, 1, &source, NULL);
+		const char* src = source.c_str();
+	    glShaderSource(fragShader, 1, &src, NULL);
 	    glCompileShader(fragShader);
 	    int success;
 		char* log = "";
