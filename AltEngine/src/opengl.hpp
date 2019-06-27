@@ -63,7 +63,6 @@ class OpenGL : BaseAPI {
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(points), points, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 	static unsigned int compileVertexGlslShader (const std::string& vertSource) {
 	    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -120,6 +119,8 @@ class OpenGL : BaseAPI {
     }
 	void startLoop () {
 		while (!glfwWindowShouldClose(glfwWindow)) {
+			glClear(GL_COLOR_BUFFER_BIT);
+			glDrawArrays(GL_TRIANGLES, 0, 3);
 			glfwSwapBuffers(glfwWindow);
 			glfwPollEvents();
 		}

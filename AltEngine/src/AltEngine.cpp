@@ -4,7 +4,7 @@
 #include "keys.hpp"
 
 int main() {
-	char* vshader = (char*)"#version 330 core\nlayout (location = 0) in vec4 aPos;\nvoid main() {\n    gl_Position = aPos;\n}\n";
+	std::string vshader = (char*)"#version 330 core\nlayout (location = 0) in vec4 aPos;\nvoid main() {\n    gl_Position = aPos;\n}\n";
 	char* fshader = (char*)"#version 330 core\nout vec4 FragColor;\nvoid main() {\n    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n}\n";
 	
 	// Let's create a test listener
@@ -21,9 +21,6 @@ int main() {
     // Now, let's attach them together and start using it!
     api->useShader(api->attachShaders(vertexShader, fragmentShader));
     
-    // Now, let's delete what we don't need anymore
-    api->deleteShader(vertexShader);
-    api->deleteShader(fragmentShader);
     
 	// Now, let's render a triangle!
 	float points[] = {
@@ -34,6 +31,13 @@ int main() {
 
 	api->renderTriangle(points);
     api->startLoop();
+
+    // Now, let's delete what we don't need anymore
+    //api->deleteShader(vertexShader);
+    //api->deleteShader(fragmentShader);
+
+	glDeleteProgram(vertexShader);
+	glDeleteProgram(fragmentShader);
 
 	delete api;
 	delete listener;
