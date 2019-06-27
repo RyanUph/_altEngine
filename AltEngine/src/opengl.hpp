@@ -60,43 +60,47 @@ class OpenGL : BaseAPI {
 		GLuint vbo;
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(points), points, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
         glDrawArrays(GL_TRIANGLES, 0, 3);
-        glDisableVertexAttribArray(0);
 	}
-	static unsigned int compileVertexGlslShader (const std::string& source) {
-	    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		const char* src = source.c_str();
-	    glShaderSource(vertexShader, 1, &src, NULL);
+	static unsigned int compileVertexGlslShader (const std::string& vertSource) {
+	    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		const char* src = vertSource.c_str();
+	    glShaderSource(vertexShader, 1, &src, nullptr);
 	    glCompileShader(vertexShader);
 	    int success;
 	    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 	    if (!success) {
-			int log;
-			char* log = (char*)alloca(log * sizeof(char));
-	    	glGetShaderInfoLog(vertexShader, GL_INFO_LOG_LENGTH, &length, log);
-	    	logger->error((char*)"I wasn't able to compile the shaders. Error:");
+			int length;
+			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &length);
+			char* log = (char*)alloca(length * sizeof(char));
+	    	glGetShaderInfoLog(vertexShader, length, &length, log);
+			AltLogger* logger = new AltLogger(true);
+			logger->error((char*)"I wasn't able to compile the shaders. Error:");
 	        logger->error((char*)log);
 	        return 1;
 	    }
 	    return vertexShader;
     }
-    static unsigned int compileFragmentGlslShader (const std::string& source) {
+    static unsigned int compileFragmentGlslShader (const std::string& fragSource) {
 	    int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-		const char* src = source.c_str();
-	    glShaderSource(fragShader, 1, &src, NULL);
+		const char* src = fragSource.c_str();
+	    glShaderSource(fragShader, 1, &src, nullptr);
 	    glCompileShader(fragShader);
 	    int success;
-		char* log = "";
+		char* log;
 	    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
 	    if (!success) {
-	    	glGetShaderInfoLog(fragShader, 512, NULL, log);
-	    	logger->error("I wasn't able to compile the shaders. Error:");
-	        logger->error(log);
-	        return 1;
+			int length;
+			glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &length);
+			char* log = (char*)alloca(length * sizeof(char));
+			glGetShaderInfoLog(fragShader, length, &length, log);
+			AltLogger* logger = new AltLogger(true);
+			logger->error((char*)"I wasn't able to compile the shaders. Error:");
+			logger->error((char*)log);
+			return 1;
 	    }
 	    return fragShader;
     }

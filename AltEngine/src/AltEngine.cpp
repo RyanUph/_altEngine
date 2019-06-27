@@ -4,8 +4,8 @@
 #include "keys.hpp"
 
 int main() {
-	std::string vshader = "#version 330 core\nlayout (location = 0) in vec3 aPos;\nvoid main() {\n    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n}";
-	std::string fshader = "#version 330 core\nout vec4 FragColor;\nvoid main() {\n    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n";
+	char* vshader = (char*)"#version 330 core\nlayout (location = 0) in vec4 aPos;\nvoid main() {\n    gl_Position = aPos;\n}\n";
+	char* fshader = (char*)"#version 330 core\nout vec4 FragColor;\nvoid main() {\n    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n}\n";
 	
 	// Let's create a test listener
 	KeyListener* listener = new KeyListener();
@@ -27,15 +27,14 @@ int main() {
     
 	// Now, let's render a triangle!
 	float points[] = {
-		0.0f,  0.5f,  0.0f,
-        0.5f, -0.5f,  0.0f,
-        -0.5f, -0.5f,  0.0f
+		0.0f,  0.5f,
+        0.5f, -0.5f,
+        -0.5f, -0.5f
 	};
 
 	api->renderTriangle(points);
     api->startLoop();
-    
-	std::cin.get();
+
 	delete api;
 	delete listener;
 }
