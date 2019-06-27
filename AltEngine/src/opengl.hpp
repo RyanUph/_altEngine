@@ -31,6 +31,9 @@ class OpenGL : BaseAPI {
 			logger->error((char*)"The engine wasn't able to start. Bye.");
 			exit(ExitCodes::ERROR);
 		}
+
+		width = 640;
+		height = 480;
 		
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -49,16 +52,6 @@ class OpenGL : BaseAPI {
 		glBindVertexArray(vao);
 		windowCreated = true;
 	}
-	void startLoop () {
-		while (!glfwWindowShouldClose(glfwWindow)) {
-			glfwSwapBuffers(glfwWindow);
-			glfwPollEvents();
-		}
-		logger->log((char*)"Game finished; window should now close... Bye!");
-		glfwDestroyWindow(glfwWindow);
-		glfwTerminate();
-		exit(ExitCodes::SUCCESS);
-	}
 	void renderTriangle (float points[]) {
 		if (!windowCreated) {
 			return logger->error((char*)"You can't use render before creating a window.");
@@ -74,12 +67,12 @@ class OpenGL : BaseAPI {
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0);
 	}
-	int compileVertexGlslShader (char* source) {
+	int compileVertexGlslShader (char* vertSource) {
 	    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	    glShaderSource(vertexShader, 1, &source, NULL);
+	    glShaderSource(vertexShader, 1, &vertSource, NULL);
 	    glCompileShader(vertexShader);
 	    int success;
-	    char* log;
+	    char* log = "";
 	    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 	    if (!success) {
 	    	glGetShaderInfoLog(vertexShader, 512, NULL, log);
@@ -94,12 +87,12 @@ class OpenGL : BaseAPI {
 	    glShaderSource(fragShader, 1, &source, NULL);
 	    glCompileShader(fragShader);
 	    int success;
-	    char* log;
+		char* log = "";
 	    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
 	    if (!success) {
 	    	glGetShaderInfoLog(fragShader, 512, NULL, log);
-	    	logger->error((char*)"I wasn't able to compile the shaders. Error:");
-	        logger->error((char*)log);
+	    	logger->error("I wasn't able to compile the shaders. Error:");
+	        logger->error(log);
 	        return 1;
 	    }
 	    return fragShader;
@@ -118,6 +111,16 @@ class OpenGL : BaseAPI {
     void useShader (int program) {
     	glUseProgram(program);
     }
+	void startLoop () {
+		while (!glfwWindowShouldClose(glfwWindow)) {
+			glfwSwapBuffers(glfwWindow);
+			glfwPollEvents();
+		}
+		logger->log((char*)"Game finished; window should now close... Bye!");
+		glfwDestroyWindow(glfwWindow);
+		glfwTerminate();
+		exit(ExitCodes::SUCCESS);
+	}
 };
 
 #endif
