@@ -77,7 +77,7 @@ class OpenGL : BaseAPI {
 			char* log = (char*)alloca(length * sizeof(char));
 	    	glGetShaderInfoLog(vertexShader, length, &length, log);
 			AltLogger* logger = new AltLogger(true);
-			logger->error((char*)"I wasn't able to compile the shaders. Error:");
+			logger->error((char*)"Vertex shader compilation failed. Error:");
 	        logger->error((char*)log);
 	        return 1;
 	    }
@@ -97,7 +97,7 @@ class OpenGL : BaseAPI {
 			char* log = (char*)alloca(length * sizeof(char));
 			glGetShaderInfoLog(fragShader, length, &length, log);
 			AltLogger* logger = new AltLogger(true);
-			logger->error((char*)"I wasn't able to compile the shaders. Error:");
+			logger->error((char*)"Fragment shader compilation failed. Error:");
 			logger->error((char*)log);
 			return 1;
 	    }
@@ -112,7 +112,7 @@ class OpenGL : BaseAPI {
     	return program;
     }
     void deleteShader (int shader) {
-    	glDeleteShader(shader);
+    	glDeleteProgram(shader);
     }
     void useShader (int program) {
     	glUseProgram(program);

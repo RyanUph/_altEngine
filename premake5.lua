@@ -7,6 +7,7 @@ workspace "AltEngine"
 	IncludeDir = {}
 	IncludeDir["GLFW"] = "AltEngine/vendor/GLFW/include"
 	IncludeDir["Glad"] = "AltEngine/vendor/Glad/include"
+	IncludeDir["glm"] = "AltEngine/vendor/glm"
 
 	include "AltEngine/vendor/GLFW"
 	include "AltEngine/vendor/Glad"
@@ -20,14 +21,21 @@ project "AltEngine"
 
 	systemversion "latest"
 	
-	files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
+	files {
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
+	}
 
 	includedirs {
 		"%{prj.name}/vendor/glad/include",
 		"%{prj.name}/vendor/glad/src",
 		"%{prj.name}/vendor/glfw/include",
 		"%{prj.name}/vendor/glfw/src",
-		"%{prj.name}/vendor/opengl3/include"
+		"%{prj.name}/vendor/opengl3/include",
+		"%{IncludeDir.glm}"
 	}
 
 	links {
